@@ -49,6 +49,21 @@ export class AuthService {
     return null;
   }
 
+  // async getCurrentUser() {
+  //   try {
+  //     const user = await this.account.get();
+  //     if (!user) {
+  //       const guest = await this.account.createAnonymousSession();
+  //       return guest;
+  //     }
+  //     return user;
+  //   } catch (error) {
+  //     // throw error;
+  //     console.log("Appwrite serive :: getCurrentUser:: error: ->>", error);
+  //   }
+  //   return null;
+  // }
+
   async logout() {
     try {
       await this.account.deleteSessions();
