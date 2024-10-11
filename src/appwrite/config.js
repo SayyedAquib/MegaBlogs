@@ -115,12 +115,8 @@ export class Service {
     }
   }
 
-  async getFilePreview(fileId) {
-    try {
-      return await this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
-    } catch (error) {
-      console.log(error);
-    }
+  getFilePreview(fileId) {
+    return this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
   }
 }
 
