@@ -11,21 +11,37 @@ function App() {
   const dispatch = useDispatch();
   const authStatus = useSelector((state) => state.auth.status);
 
+  // Check localStorage on load
   useEffect(() => {
-    // Only call getCurrentUser if authStatus is true
+    const storedUser = localStorage.getItem("userData");
+
+    if (storedUser) {
+      // If there's a user in localStorage, dispatch login
+      dispatch(login({ userData: JSON.parse(storedUser) }));
+    } else {
+      // No user found, ensure logged out state
+      dispatch(logout());
+    }
+
+    setLoading(false);
+  }, [dispatch]);
+
+  // Check authStatus and get the current user if authenticated
+  useEffect(() => {
     if (authStatus) {
       authService
         .getCurrentUser()
         .then((userData) => {
           if (userData) {
+            // Persist the user data in localStorage
+            localStorage.setItem("userData", JSON.stringify(userData));
             dispatch(login({ userData }));
           } else {
             dispatch(logout());
+            localStorage.removeItem("userData");
           }
         })
         .finally(() => setLoading(false));
-    } else {
-      setLoading(false); // If authStatus is false, stop loading
     }
   }, [authStatus, dispatch]);
 
