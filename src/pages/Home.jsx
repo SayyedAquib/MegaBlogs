@@ -6,7 +6,8 @@ import { useSelector } from "react-redux";
 function Home() {
   const [posts, setPosts] = useState([]);
   const authStatus = useSelector((state) => state.auth.status);
-
+  console.log("Home rendered")
+  
   useEffect(() => {
     if (authStatus) {
       appwriteService.getPosts().then((posts) => {
@@ -17,7 +18,7 @@ function Home() {
     }
   }, [authStatus]);
 
-  if (posts.length === 0) {
+  if (posts.length === 0 || !authStatus) {
     return (
       <div className="w-full py-8 mt-4 text-center">
         <Container>
