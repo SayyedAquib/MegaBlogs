@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 function Home() {
   const [posts, setPosts] = useState([]);
   const authStatus = useSelector((state) => state.auth.status);
-  console.log("Home rendered")
   
   useEffect(() => {
     if (authStatus) {
